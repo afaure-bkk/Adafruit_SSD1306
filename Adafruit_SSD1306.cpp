@@ -727,3 +727,23 @@ void Adafruit_SSD1306::drawFastVLineInternal(int16_t x, int16_t __y, int16_t __h
     }
   }
 }
+
+
+// afaure : scroll by that number of lines
+void Adafruit_SSD1306::scroll( uint8_t iLines ) {
+  // Move by the number of entire batches of 8 pixels in iLines
+  memmove( buffer,
+           buffer + iLines / 8 * SSD1306_LCDWIDTH,
+           ( SSD1306_LCDHEIGHT - iLines ) / 8 * SSD1306_LCDWIDTH );
+  memset( buffer + (SSD1306_LCDHEIGHT - iLines ) / 8 * SSD1306_LCDWIDTH,
+          0,
+          ( iLines / 8 ) * SSD1306_LCDWIDTH );
+
+  // If not a multiple of 8 : still need to shift. 
+  // We have already shifted by iLines / 8 * 8 pixels. Need to shift by the remainder
+  // TODO
+  if( iLines & 7 != 0 ) {
+
+  }
+
+}
